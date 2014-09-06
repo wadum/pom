@@ -1,0 +1,28 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[danish,british]{babel}
+\usepackage[pdftex]{graphicx}
+\usepackage{pdfpages}
+\usepackage{listings}
+\usepackage{pgf}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{xcolor}
+
+\definecolor{secnum}{RGB}{102,102,102}
+\makeatletter
+\def\@seccntformat#1{\llap{\color{secnum}\csname the#1\endcsname\hskip 16pt}}
+\makeatother
+\title{Individuel opgave 1}
+\author{Christoffer Wadum Larsen}
+
+\begin{document}
+\maketitle
+
+\section{Individuel opgave 1}
+
+Løsningen til den individuelle opgave i uge 1. Løsningen indeholder en funktion findRodder(a,b,c) der returnere rødderne $x1$ og $x2$. Ved kørsel bliver findRodder(1, 1000.001, 1) afviklet og resultatet herfra printet. Den printede besked er $x1 = -1000.000000, x2 = -0.001000$.
+
+\end{document}

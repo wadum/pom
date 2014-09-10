@@ -1,28 +1,49 @@
 \documentclass[12pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage{amsmath,amssymb,amsthm}
+\usepackage[utf8]{luainputenc}
 \usepackage[danish,british]{babel}
 \usepackage[pdftex]{graphicx}
-\usepackage{pdfpages}
 \usepackage{listings}
-\usepackage{pgf}
-\usepackage{verbatim}
 \usepackage{hyperref}
-\usepackage{float}
 \usepackage{xcolor}
 
-\definecolor{secnum}{RGB}{102,102,102}
-\makeatletter
-\def\@seccntformat#1{\llap{\color{secnum}\csname the#1\endcsname\hskip 16pt}}
-\makeatother
+\lstset{
+	basicstyle=\tiny
+}
+
 \title{Individuel opgave 1}
 \author{Christoffer Wadum Larsen}
 
 \begin{document}
 \maketitle
 
-\section{Individuel opgave 1}
+\section{Genaflevering individuel opgave 1}
 
-Løsningen til den individuelle opgave i uge 1. Løsningen indeholder en funktion findRodder(a,b,c) der returnere rødderne $x1$ og $x2$. Ved kørsel bliver findRodder(1, 1000.001, 1) afviklet og resultatet herfra printet. Den printede besked er $x1 = -1000.000000, x2 = -0.001000$.
+Til genafleveringen er løsningen gjort interaktiv, eftersom der var en kommentar omkring input og raw\_input gik jeg ud fra at det var et krav.
+
+Programmet har til formål at løse et andengradspolynomium på formen $ax^2+bx+c=0$.
+
+Hvis programmet køres fra en prompt vil main() bliver afviklet. Main har til formål at modtage a, b og c som input fra brugeren.
+
+Main() kalder herefter findRodder(a,b,c), der returnere rødderne x1 og x2. Hvis $D < 0$, findes der ingen løsninger og m.sqrt kaster en ValueError fejl. Hvis $a == 0$ er der ikke længere tale om et andengradspolynomium, funktionen kaster derfor en ZeroDivision fejl. Hvis $D == 0$ eller $D > 0$ printer main() rødderne.
+
+Begge disse fejl bliver fanget i main()
+
+
+\section{Tests}
+
+\begin{lstlisting}
+[chris@localhost pom]$ python christoffer.larsen.36.py 
+Angiv a: 1
+Angiv b: 1000.001
+Angiv c: 1
+Rødderne for andengradspolynomiumet 1.000000x²+1000.001000b+1.000000=0 er 
+	 x1 = -1000.000000, x2 = -0.001000
+[chris@localhost pom]$ python christoffer.larsen.36.py 
+Angiv a: 5
+Angiv b: -10
+Angiv c: 1
+Rødderne for andengradspolynomiumet 5.000000x²+-10.000000b+1.000000=0 er 
+	 x1 = 1.894427, x2 = 0.105573
+\end{lstlisting}
 
 \end{document}

@@ -1,0 +1,45 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[danish,british]{babel}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\lstset{
+	basicstyle=\tiny
+}
+
+\title{Individuel opgave 2}
+\author{Christoffer Wadum Larsen}
+
+\begin{document}
+\maketitle
+
+\section{Individuel opgave 2}
+
+Rapporten her er kort, da alle funktionerne forhåbentligt er godt nok dokumenteret i kildekoden.
+
+\subsection{(a)}
+
+\subsubsection{cmod}
+
+Modulus for $z$ er beregnet som \[z = |x+iy| = \sqrt{x^2 + y^2}\]
+
+\subsubsection{carg}
+
+Argumentet for $z$ er beregnet som \[z = arg(x+iy) = \arctan(y,x)\]
+
+\subsection{(b)}
+\subsubsection{csqrt1}
+Csqrt1 er implementeret som beskrevet i thm. 2. Hvis $z == 0$ bliver der kastet en exception, ellers bliver roden w1 returneret.
+\subsubsection{csqrt2}
+Samme kommentar som csqrt1.
+
+\subsection{(c)}
+\subsubsection{polyrod1}
+Beregner roden $x_1$ for et komplekst polynomium på formen $f(z) = ax^2+bx+c = 0$
+\subsubsection{polyrod2}
+Samme kommentar som polyrod1.
+
+\end{document}

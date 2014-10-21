@@ -17,6 +17,17 @@ def rInt(f, a, b, n):
 		res += abs(ti - ti_1)*f(ti)
 	return res
 
+def rIntMid(f, a, b, n):
+	n_list = partition(a, b, n)
+	n_list.reverse()
+	ti = n_list.pop()
+	res = 0.0
+	while len(n_list):
+		ti_1 = ti
+		ti = n_list.pop()
+		res += abs(ti - ti_1)*0.5*(f(ti)+f(ti_1))
+	return res
+
 def partition(a, b, n):
 	frc = (b-a)/n
 	lst = [float(a)]
@@ -33,4 +44,5 @@ def testPartition():
 
 if __name__ == '__main__':
 	testPartition()
-	print rInt(f, 0, 10, 1000000)
+	print rInt(f, 0, 10, 1000)
+	print rIntMid(f, 0, 10, 1000)

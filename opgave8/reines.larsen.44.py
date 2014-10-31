@@ -58,26 +58,26 @@ def divergence(V1, V2):
 			(imageListDiv[i])[j] = divx + divy
 	return imageListDiv
 
-plt.figure()
-plt.imshow(imageList)
+# plt.figure()
+# plt.imshow(imageList)
 
-(dx, dy)  = gradient(imageList)
+# (dx, dy)  = gradient(imageList)
 
-plt.figure()
-plt.imshow(dx, cmap="Greys_r")
+# plt.figure()
+# plt.imshow(dx, cmap="Greys_r")
 
-plt.figure()
-plt.imshow(dy, cmap="Greys_r")
+# plt.figure()
+# plt.imshow(dy, cmap="Greys_r")
 
-dnorm = gradNorm(dx, dy)
-plt.figure()
-plt.imshow(dnorm, cmap="Greys_r")
+# dnorm = gradNorm(dx, dy)
+# plt.figure()
+# plt.imshow(dnorm, cmap="Greys_r")
 
-ddiv = divergence(dx, dy)
-plt.figure()
-plt.imshow(ddiv, cmap="Greys_r")
+# ddiv = divergence(dx, dy)
+# plt.figure()
+# plt.imshow(ddiv, cmap="Greys_r")
 
-#plt.show()
+# plt.show()
 
 y = csvImageRead("CameramanNoisy.csv")
 N = len(y)
@@ -87,6 +87,21 @@ w1 = [[0 for i in range(N)] for i in range(N)]
 w2 = [[0 for i in range(N)] for i in range(N)]
 divW = divergence(w1, w2)
 ylambda = [[i*lambd for i in x] for x in y]
-for i in range(2):
+for i in range(200):
 	(dWx, dWy) = gradient(map(lambda m, n: map(lambda s, z: s-z, m, n), ylambda, divW))
 	dWnorm = gradNorm(dWx, dWy)
+	w1 = map(lambda m, n: map(lambda s, z: s-tau*z, m, n), w1, dWx)
+	w2 = map(lambda m, n: map(lambda s, z: s-tau*z, m, n), w2, dWy)
+	w1 = map(lambda m, n: map(lambda s, z: s/(1+tau*z), m, n), w1, dWnorm)
+	w2 = map(lambda m, n: map(lambda s, z: s/(1+tau*z), m, n), w2, dWnorm)
+	divW = divergence(w1, w2)
+
+x = map(lambda m, n: map(lambda s, z: s-(0.5*z), m, n), y, divW)
+
+plt.figure()
+plt.imshow(y)
+
+plt.figure()
+plt.imshow(x)
+
+plt.show()

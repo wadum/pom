@@ -79,10 +79,18 @@ def divergence(V1, V2):
 
 # plt.show()
 
+def itera(f, a, b):
+	N = len(a)
+	res = [[0 for i in range(N)] for i in range(N)]
+	for i in range(N):
+		for j in range(N):
+			(res[i])[j] = f((a[i])[j], (b[i])[j])
+	return res
+
 y = csvImageRead("CameramanNoisy.csv")
 N = len(y)
 tau = 0.248
-lambd = 0.2
+lambd = 0.08
 w1 = [[0 for i in range(N)] for i in range(N)]
 w2 = [[0 for i in range(N)] for i in range(N)]
 divW = divergence(w1, w2)
@@ -90,8 +98,8 @@ ylambda = [[i*lambd for i in x] for x in y]
 (ylambdaWx, ylambdaWy) = gradient(ylambda)
 for i in range(200):
 	(divWx, divWy) = gradient(divW)
-	dWx = map(lambda m, n: map(lambda s, z: s+z, m, n), ylambdaWx, divWx)
-	dWy = map(lambda m, n: map(lambda s, z: s+z, m, n), ylambdaWy, divWy)
+	dWx = itera(lambda m, n: m+n, ylambdaWx, divWx)
+	dWy = itera(lambda m, n: m+n, ylambdaWy, divWy)
 	dWnorm = gradNorm(dWx, dWy)
 	w1 = map(lambda m, n: map(lambda s, z: s-tau*z, m, n), w1, dWx)
 	w2 = map(lambda m, n: map(lambda s, z: s-tau*z, m, n), w2, dWy)

@@ -82,7 +82,7 @@ def divergence(V1, V2):
 y = csvImageRead("CameramanNoisy.csv")
 N = len(y)
 tau = 0.248
-lambd = 0.08
+lambd = 0.2
 w1 = [[0 for i in range(N)] for i in range(N)]
 w2 = [[0 for i in range(N)] for i in range(N)]
 divW = divergence(w1, w2)
@@ -99,7 +99,10 @@ for i in range(200):
 	w2 = map(lambda m, n: map(lambda s, z: s/(1+tau*z), m, n), w2, dWnorm)
 	divW = divergence(w1, w2)
 
-x = map(lambda m, n: map(lambda s, z: s-(0.5*z), m, n), y, divW)
+x = map(lambda m, n: map(lambda s, z: s-((1/tau)*z), m, n), y, divW)
+
+plt.figure()
+plt.imshow(divW, cmap="Greys_r")
 
 plt.figure()
 plt.imshow(y, cmap="Greys_r")

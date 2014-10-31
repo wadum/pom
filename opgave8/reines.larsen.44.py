@@ -59,7 +59,7 @@ def divergence(V1, V2):
 	return imageListDiv
 
 # plt.figure()
-# plt.imshow(imageList)
+# plt.imshow(imageList, cmap="Greys_r")
 
 # (dx, dy)  = gradient(imageList)
 
@@ -102,9 +102,9 @@ for i in range(200):
 x = map(lambda m, n: map(lambda s, z: s-(0.5*z), m, n), y, divW)
 
 plt.figure()
-plt.imshow(y)
+plt.imshow(y, cmap="Greys_r")
 
 plt.figure()
-plt.imshow(x)
+plt.imshow(x, cmap="Greys_r")
 
 plt.show()

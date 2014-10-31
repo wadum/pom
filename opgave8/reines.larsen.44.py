@@ -96,18 +96,18 @@ w2 = [[0 for i in range(N)] for i in range(N)]
 divW = divergence(w1, w2)
 ylambda = [[i*lambd for i in x] for x in y]
 (ylambdaWx, ylambdaWy) = gradient(ylambda)
-for i in range(200):
+for i in range(100):
 	(divWx, divWy) = gradient(divW)
 	dWx = itera(lambda m, n: m+n, ylambdaWx, divWx)
 	dWy = itera(lambda m, n: m+n, ylambdaWy, divWy)
 	dWnorm = gradNorm(dWx, dWy)
-	w1 = map(lambda m, n: map(lambda s, z: s-tau*z, m, n), w1, dWx)
-	w2 = map(lambda m, n: map(lambda s, z: s-tau*z, m, n), w2, dWy)
-	w1 = map(lambda m, n: map(lambda s, z: s/(1+tau*z), m, n), w1, dWnorm)
-	w2 = map(lambda m, n: map(lambda s, z: s/(1+tau*z), m, n), w2, dWnorm)
+	w1 = itera(lambda s, z: s-tau*z, w1, dWx)
+	w2 = itera(lambda s, z: s-tau*z, w2, dWy)
+	w1 = itera(lambda s, z: s/(1+tau*z), w1, dWnorm)
+	w2 = itera(lambda s, z: s/(1+tau*z), w2, dWnorm)
 	divW = divergence(w1, w2)
 
-x = map(lambda m, n: map(lambda s, z: s-((1/tau)*z), m, n), y, divW)
+x = itera(lambda s, z: s-((1/tau)*z), y, divW)
 
 plt.figure()
 plt.imshow(divW, cmap="Greys_r")

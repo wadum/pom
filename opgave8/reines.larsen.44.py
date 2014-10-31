@@ -87,7 +87,7 @@ w1 = [[0 for i in range(N)] for i in range(N)]
 w2 = [[0 for i in range(N)] for i in range(N)]
 divW = divergence(w1, w2)
 ylambda = [[i*lambd for i in x] for x in y]
-(ylambdaWx, ylambdaWy) = gradient(divW)
+(ylambdaWx, ylambdaWy) = gradient(ylambda)
 for i in range(200):
 	(divWx, divWy) = gradient(divW)
 	dWx = map(lambda m, n: map(lambda s, z: s+z, m, n), ylambdaWx, divWx)

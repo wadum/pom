@@ -91,15 +91,13 @@ y = csvImageRead("CameramanNoisy.csv")
 N = len(y)
 tau = 0.248
 lambd = 0.08
-w1 = [[0 for i in range(N)] for i in range(N)]
-w2 = [[0 for i in range(N)] for i in range(N)]
+w1 = [[0 for x in range(N)] for i in range(N)]
+w2 = [[0 for x in range(N)] for i in range(N)]
 divW = divergence(w1, w2)
 ylambda = [[i*lambd for i in x] for x in y]
 (ylambdaWx, ylambdaWy) = gradient(ylambda)
-for i in range(100):
-	(divWx, divWy) = gradient(divW)
-	dWx = itera(lambda m, n: m+n, ylambdaWx, divWx)
-	dWy = itera(lambda m, n: m+n, ylambdaWy, divWy)
+for i in range(200):
+	(dWx, dWy) = gradient(itera(lambda m, n: m-n, ylambda, divW))
 	dWnorm = gradNorm(dWx, dWy)
 	w1 = itera(lambda s, z: s-tau*z, w1, dWx)
 	w2 = itera(lambda s, z: s-tau*z, w2, dWy)
@@ -107,7 +105,7 @@ for i in range(100):
 	w2 = itera(lambda s, z: s/(1+tau*z), w2, dWnorm)
 	divW = divergence(w1, w2)
 
-x = itera(lambda s, z: s-((1/tau)*z), y, divW)
+x = itera(lambda s, z: s-((1/lambd)*z), y, divW)
 
 plt.figure()
 plt.imshow(divW, cmap="Greys_r")

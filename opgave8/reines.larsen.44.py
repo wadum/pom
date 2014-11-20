@@ -21,11 +21,11 @@ def gradient(V):
 	for i in range(N):
 		for j in range(N):
 			if i < N-1:
-				(imageListDx[i])[j] = (imageList[i+1])[j] - (imageList[i])[j]
+				(imageListDx[i])[j] = (V[i+1])[j] - (V[i])[j]
 			else:
 				(imageListDx[i])[j] = 0.0
 			if j < N-1:
-				(imageListDy[i])[j] = (imageList[i])[j+1] - (imageList[i])[j]
+				(imageListDy[i])[j] = (V[i])[j+1] - (V[i])[j]
 			else:
 				(imageListDy[i])[j] = 0.0
 	return (imageListDx, imageListDy)
@@ -90,12 +90,13 @@ def itera(f, a, b):
 y = csvImageRead("CameramanNoisy.csv")
 N = len(y)
 tau = 0.248
-lambd = 0.08
+lambd = 0.12
 w1 = [[0 for x in range(N)] for i in range(N)]
 w2 = [[0 for x in range(N)] for i in range(N)]
 divW = divergence(w1, w2)
 ylambda = [[i*lambd for i in x] for x in y]
 (ylambdaWx, ylambdaWy) = gradient(ylambda)
+y9 = list()
 for i in range(200):
 	(dWx, dWy) = gradient(itera(lambda m, n: m-n, ylambda, divW))
 	dWnorm = gradNorm(dWx, dWy)
@@ -104,11 +105,9 @@ for i in range(200):
 	w1 = itera(lambda s, z: s/(1+tau*z), w1, dWnorm)
 	w2 = itera(lambda s, z: s/(1+tau*z), w2, dWnorm)
 	divW = divergence(w1, w2)
+	y9.append(m.fsum(reduce(lambda s, x: s + x, itera(lambda v, w: (v-w)**2, w1, w2))))
 
 x = itera(lambda s, z: s-((1/lambd)*z), y, divW)
-
-plt.figure()
-plt.imshow(divW, cmap="Greys_r")
 
 plt.figure()
 plt.imshow(y, cmap="Greys_r")
@@ -117,3 +116,5 @@ plt.figure()
 plt.imshow(x, cmap="Greys_r")
 
 plt.show()
+
+print y9

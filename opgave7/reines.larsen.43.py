@@ -9,7 +9,7 @@ import pylab
 import numpy
 import math as m
 
-makePlot = False
+global makePlot
 
 def rInt(f, a, b, n):
 	u''' Beregner Riemannsummen givet funktionen f, et start punkt, a, et slutpunkt, b,

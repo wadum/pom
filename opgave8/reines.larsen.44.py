@@ -9,38 +9,63 @@ import matplotlib.pyplot as plt
 from csvImageRead import csvImageRead
 import math as m
 
+# Indlæs billedet Cameraman
 imageList = csvImageRead("Cameraman.csv")
 
+# Afprøv at samtlige værdier i Cameraman ligger imellem 0 og 255 samt at bredden er det samme som højden
 if not len([y for x in imageList for y in x if y < 0 or y > 255 or len(x) is not len(imageList)]):
 	print "Alle værdier ligger imellem 0 og 255 samt højden er ens med bredden."
 
 def gradient(V):
+	""" Beregn gradienten af billedet V
+
+	args:
+		V - billedet
+	res:
+		(vDx, vDy) - de to gradient billeder
+	"""
 	N = len(V)
-	imageListDx = [[0 for i in range(N)] for i in range(N)]
-	imageListDy = [[0 for i in range(N)] for i in range(N)]
+	vDx = [[0 for i in range(N)] for i in range(N)]
+	vDy = [[0 for i in range(N)] for i in range(N)]
 	for i in range(N):
 		for j in range(N):
 			if i < N-1:
-				(imageListDx[i])[j] = (imageList[i+1])[j] - (imageList[i])[j]
+				(vDx[i])[j] = (V[i+1])[j] - (V[i])[j]
 			else:
-				(imageListDx[i])[j] = 0.0
+				(vDx[i])[j] = 0.0
 			if j < N-1:
-				(imageListDy[i])[j] = (imageList[i])[j+1] - (imageList[i])[j]
+				(vDy[i])[j] = (V[i])[j+1] - (V[i])[j]
 			else:
-				(imageListDy[i])[j] = 0.0
-	return (imageListDx, imageListDy)
+				(vDy[i])[j] = 0.0
+	return (vDx, vDy)
 
 def gradNorm(V1, V2):
+	""" Beregner normen af en gradient
+
+	args:
+		V1 - x komponenten af gradienten
+		V2 - y komponenten af gradienten
+	res:
+		VNorm
+	"""
 	N = len(V1)
-	imageListNorm = [[0 for i in range(N)] for i in range(N)]
+	VNorm = [[0 for i in range(N)] for i in range(N)]
 	for i in range(N):
 		for j in range(N):
-			(imageListNorm[i])[j] = m.sqrt((V1[i])[j]**2 + (V2[i])[j]**2)
-	return imageListNorm
+			(VNorm[i])[j] = m.sqrt((V1[i])[j]**2 + (V2[i])[j]**2)
+	return VNorm
 
 def divergence(V1, V2):
+	""" Beregner divergencen af en gradient
+
+	args:
+		V1 - x komponenten af gradienten
+		V2 - y komponenten af gradienten
+	res:
+		VDiv
+	"""
 	N = len(V1)
-	imageListDiv = [[0 for i in range(N)] for i in range(N)]
+	VDiv = [[0 for i in range(N)] for i in range(N)]
 	for i in range(N):
 		for j in range(N):
 			if i < N-1 and i > 0:
@@ -55,31 +80,48 @@ def divergence(V1, V2):
 				divy = (V2[i])[j]
 			elif j is N-1:
 				divy = - (V2[i])[j-1]
-			(imageListDiv[i])[j] = divx + divy
-	return imageListDiv
+			(VDiv[i])[j] = divx + divy
+	return VDiv
 
-# plt.figure()
-# plt.imshow(imageList, cmap="Greys_r")
+# Plot Cameraman
+plt.figure()
+plt.title("Opgave a - plot Cameraman")
+plt.imshow(imageList, cmap="Greys_r")
 
-# (dx, dy)  = gradient(imageList)
+# Beregn gradienten af Cameraman
+(dx, dy)  = gradient(imageList)
 
-# plt.figure()
-# plt.imshow(dx, cmap="Greys_r")
+# Plot gradientbillederne for Cameraman
+plt.figure()
+plt.title("Opgave b - x komponenten af gradienten")
+plt.imshow(dx, cmap="Greys_r")
 
-# plt.figure()
-# plt.imshow(dy, cmap="Greys_r")
+plt.figure()
+plt.title("Opgave b - y komponenten af gradienten")
+plt.imshow(dy, cmap="Greys_r")
 
-# dnorm = gradNorm(dx, dy)
-# plt.figure()
-# plt.imshow(dnorm, cmap="Greys_r")
+#Beregn normen
+dnorm = gradNorm(dx, dy)
 
-# ddiv = divergence(dx, dy)
-# plt.figure()
-# plt.imshow(ddiv, cmap="Greys_r")
+# Plot normen
+plt.figure()
+plt.title("Opgave c - normen af gradienten")
+plt.imshow(dnorm, cmap="Greys_r")
 
-# plt.show()
+# Beregn divergencen
+ddiv = divergence(dx, dy)
 
-def itera(f, a, b):
+# Plot divergencen
+plt.figure()
+plt.title("Ogpave d - divergencen af gradienten")
+plt.imshow(ddiv, cmap="Greys_r")
+
+def __itera__(f, a, b):
+	""" Hjælpefunktion
+
+	Udfører f(a(i,j), b(i,j)) - equivalent til map(lambda x, y: map(f, x, y), a, b)
+
+	"""
 	N = len(a)
 	res = [[0 for i in range(N)] for i in range(N)]
 	for i in range(N):
@@ -87,8 +129,11 @@ def itera(f, a, b):
 			(res[i])[j] = f((a[i])[j], (b[i])[j])
 	return res
 
+# Indlæs det støjfyldte billed
 y = csvImageRead("CameramanNoisy.csv")
 N = len(y)
+
+# Initialiser variabler
 tau = 0.248
 lambd = 0.08
 w1 = [[0 for x in range(N)] for i in range(N)]
@@ -96,24 +141,33 @@ w2 = [[0 for x in range(N)] for i in range(N)]
 divW = divergence(w1, w2)
 ylambda = [[i*lambd for i in x] for x in y]
 (ylambdaWx, ylambdaWy) = gradient(ylambda)
+y9 = list()
+
+# Udfør glatningsprocessen
 for i in range(200):
-	(dWx, dWy) = gradient(itera(lambda m, n: m-n, ylambda, divW))
+	(dWx, dWy) = gradient(__itera__(lambda m, n: m-n, ylambda, divW))
 	dWnorm = gradNorm(dWx, dWy)
-	w1 = itera(lambda s, z: s-tau*z, w1, dWx)
-	w2 = itera(lambda s, z: s-tau*z, w2, dWy)
-	w1 = itera(lambda s, z: s/(1+tau*z), w1, dWnorm)
-	w2 = itera(lambda s, z: s/(1+tau*z), w2, dWnorm)
+	w1 = __itera__(lambda s, z: s-tau*z, w1, dWx)
+	w2 = __itera__(lambda s, z: s-tau*z, w2, dWy)
+	w1 = __itera__(lambda s, z: s/(1+tau*z), w1, dWnorm)
+	w2 = __itera__(lambda s, z: s/(1+tau*z), w2, dWnorm)
 	divW = divergence(w1, w2)
+	y9.append(m.fsum(reduce(lambda s, x: s + x, __itera__(lambda v, w: (v-w)**2, w1, w2))))
 
-x = itera(lambda s, z: s-((1/lambd)*z), y, divW)
+x = __itera__(lambda s, z: s-((1/lambd)*z), y, divW)
 
+# Vis billedet før og efter glatningsprocessen
 plt.figure()
-plt.imshow(divW, cmap="Greys_r")
-
-plt.figure()
+plt.title("Opgave e - stoejfyldt Cameraman")
 plt.imshow(y, cmap="Greys_r")
 
 plt.figure()
+plt.title("Opgave e - stoejreduceret Cameraman")
 plt.imshow(x, cmap="Greys_r")
+
+# Vis grafen til opgave f
+plt.figure()
+plt.title("Opgave f")
+plt.plot(y9)
 
 plt.show()

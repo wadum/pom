@@ -19,6 +19,14 @@ class Dataset:
 	def __len__(self):
 		return len(self.dataPoints)
 
+	def readDataPoints(self, filePath):
+		self.__init__()
+		with open(filePath, 'r') as f:
+			for line in f:
+				xy = line.strip().split(",")
+				self.add(DataPoint(float(xy[0]), float(xy[1])))
+		return self
+
 	def add(self, dataPoint):
 		self.dataPoints.append(dataPoint)
 		return self
@@ -103,7 +111,7 @@ class Regression:
 
 
 if __name__ == '__main__':
-	dataset = Dataset().addAll([DataPoint(0,0), DataPoint(1,1), DataPoint(2,2)])
+	dataset = Dataset().readDataPoints("flueaeg.txt")
 	print dataset
 	regression = Regression(dataset)
 	print regression.linearAnalysis()

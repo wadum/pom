@@ -134,9 +134,5 @@ class Regression:
 
 if __name__ == '__main__':
 	dataset = Dataset().readDataPoints("flueaeg.txt")
-	print dataset
-	regression = Regression(dataset)
-	result = regression.linearAnalysis()
-	print result
-	dataset.plot(plt, result)
+	dataset.plot(plt, Regression(dataset).linearAnalysis())
 	plt.show()

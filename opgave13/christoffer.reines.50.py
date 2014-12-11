@@ -278,4 +278,7 @@ if __name__ == '__main__':
 	# Correct
 	dataset = Dataset().readDataPoints("flueaeg.txt")
 	dataset.plot(plt, Regression(dataset).linearAnalysis())
+	plt.xlabel('x')
+	plt.ylabel('y')
+	plt.title('Linear regressionanalysis of dataset in flueaeg.txt')
 	plt.show()

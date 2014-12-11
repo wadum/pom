@@ -144,7 +144,10 @@ class DataPoint:
 class Regression:
 	def __init__(self, data):
 		""" Constructor to Regression """
-		self.data = data
+		if isinstance(data, Dataset):
+			self.data = data
+		else:
+			raise TypeError("data is not a Dataset.")
 
 	def __x_mid(self):
 		""" 

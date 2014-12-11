@@ -8,15 +8,24 @@ import matplotlib.pyplot as plt
 
 class Dataset:
 	def __init__(self):
+		""" Constructor til Dataset.
+
+		"""
 		self.dataPoints = []
 
 	def __str__(self):
+		""" Returns a string representation of the Dataset
+
+		"""
 		res = "["
 		for dataPoint in self.dataPoints:
 			res += str(dataPoint)
 		return res + "]"
 
 	def __len__(self):
+		""" Returns the length of the Dataset
+
+		"""
 		return len(self.dataPoints)
 
 	def readDataPoints(self, filePath):
@@ -41,21 +50,36 @@ class Dataset:
 		return self
 
 	def add(self, dataPoint):
+		""" Adds a single DataPoint to the Dataset.
+
+		"""
 		self.dataPoints.append(dataPoint)
 		return self
 
 	def addAll(self, dataPoints):
+		""" Adds a collection of DataPoint to the Dataset.
+
+		"""
 		for dataPoint in dataPoints:
 			self.dataPoints.append(dataPoint)
 		return self
 
 	def get(self, index):
+		""" Returns the DataPoint at Dataset[index]
+
+		"""
 		return self.dataPoints[index]
 
 	def getAll(self):
+		""" Returns all DataPoint in the Dataset
+
+		"""
 		return self.dataPoints
 
 	def x_max(self):
+		""" Returns the largest x value in the Dataset.
+
+		"""
 		tmp = self.get(0)
 		for dataPoint in self.getAll():
 			if tmp.getX() < dataPoint.getX():
@@ -63,6 +87,9 @@ class Dataset:
 		return tmp.getX()
 
 	def x_min(self):
+		""" Returns the smallest x value in the Dataset.
+
+		"""
 		tmp = self.get(0)
 		for dataPoint in self.getAll():
 			if tmp.getX() > dataPoint.getX():
@@ -70,6 +97,14 @@ class Dataset:
 		return tmp.getX()
 		
 	def plot(self, in_plot, (regx, regy)):
+		""" Plots this Dataset with the output of linearAnalysis.
+
+			args:
+				in_plot: The plot to add points to.
+				(regx, regy):
+					regx: List of x-values from a linearAnalysis.
+					regy: List of y-values from a linearAnalysis.
+		"""
 		listx = []
 		listy = []
 		for dataPoint in self.getAll():

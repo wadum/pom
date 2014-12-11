@@ -133,9 +133,57 @@ class Regression:
 		return self.__a() * (x - self.__x_mid()) + self.__y_mid()
 
 	def linearAnalysis(self):
+		if len(self.data) < 2:
+			raise RuntimeError("Too few arguments in dataset")
 		return([self.data.x_min(), self.data.x_max()], [self.__f(self.data.x_min()), self.__f(self.data.x_max())])
 
 if __name__ == '__main__':
+	# File not exist
+	print "Invalid filename:"
+	try:
+		dataset = Dataset().readDataPoints("sys32.deleteme")
+	except IOError as ioe:
+		print "Test succeeded"
+	else:
+		print "Test failed"
+	
+	# Wrong fileformat
+	print "Invalid format in file:"
+	try:
+		dataset = Dataset().readDataPoints("flueaeg_fformat.txt")
+	except ValueError as ve:
+		print "Test succeeded"
+	else:
+		print "Test failed"
+		
+	# Too few datapoints in the set
+	print "Too few datapoints in the set:"
+	try:
+		dataset = Dataset().addAll([])
+		Regression(dataset).linearAnalysis()
+	except RuntimeError as ve:
+		print "Test succeeded"
+	else:
+		print "Test failed"
+		
+	try:
+		dataset = Dataset().add(DataPoint(0.0, 0.0))
+		Regression(dataset).linearAnalysis()
+	except RuntimeError as ve:
+		print "Test succeeded"
+	else:
+		print "Test failed"
+		
+	try:
+		dataset = Dataset().addAll([DataPoint(0.0, 0.0),DataPoint(1.0, 1.0)])
+		Regression(dataset).linearAnalysis()
+	except RuntimeError as ve:
+		print "Test failed"
+	else:
+		print "Test succeeded"
+
+
+	# Correct
 	dataset = Dataset().readDataPoints("flueaeg.txt")
 	dataset.plot(plt, Regression(dataset).linearAnalysis())
 	plt.show()

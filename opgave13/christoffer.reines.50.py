@@ -4,6 +4,7 @@
 	Opgave 13
 """
 from __future__ import division
+import os.path
 import matplotlib.pyplot as plt
 
 class Dataset:
@@ -27,6 +28,8 @@ class Dataset:
 			Dataset with points read from file
 		"""
 		self.__init__()
+		if not os.path.isfile(filePath):
+			raise IOError("File %s not found." % filePath)
 		with open(filePath, 'r') as f:
 			num_lines = 0
 			for line in f:

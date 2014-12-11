@@ -3,8 +3,8 @@
 """
 	Opgave 13
 """
-
 from __future__ import division
+import matplotlib.pyplot as plt
 
 class Dataset:
 	def __init__(self):
@@ -20,11 +20,24 @@ class Dataset:
 		return len(self.dataPoints)
 
 	def readDataPoints(self, filePath):
+		""" Reads data points from absolute filepath
+		args:
+			filepath: absolute filepath eg C:\Users\Name\Documents\file.txt
+		returns:
+			Dataset with points read from file
+		"""
 		self.__init__()
 		with open(filePath, 'r') as f:
+			num_lines = 0
 			for line in f:
+				num_lines += 1
 				xy = line.strip().split(",")
-				self.add(DataPoint(float(xy[0]), float(xy[1])))
+				if len(xy) > 2:
+					raise ValueError("Input file %s at line %d contains too many numbers." % (filePath, num_lines))
+				try:
+					self.add(DataPoint(float(xy[0]), float(xy[1])))
+				except:
+					raise ValueError("Input file %s at line %d is of wrong format." % (filePath, num_lines))
 		return self
 
 	def add(self, dataPoint):
@@ -55,6 +68,16 @@ class Dataset:
 			if tmp.getX() > dataPoint.getX():
 				tmp = dataPoint
 		return tmp.getX()
+		
+	def plot(self, in_plot, (regx, regy)):
+		listx = []
+		listy = []
+		for dataPoint in self.getAll():
+			listx.append(dataPoint.getX())
+			listy.append(dataPoint.getY())
+		in_plot.plot(listx, listy, 'ro', color="g")
+		in_plot.plot(regx, regy, color="r")
+		return in_plot
 
 class DataPoint:
 	def __init__(self, x, y):
@@ -109,9 +132,11 @@ class Regression:
 	def linearAnalysis(self):
 		return([self.data.x_min(), self.data.x_max()], [self.__f(self.data.x_min()), self.__f(self.data.x_max())])
 
-
 if __name__ == '__main__':
 	dataset = Dataset().readDataPoints("flueaeg.txt")
 	print dataset
 	regression = Regression(dataset)
-	print regression.linearAnalysis()
+	result = regression.linearAnalysis()
+	print result
+	dataset.plot(plt, result)
+	plt.show()

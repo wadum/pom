@@ -259,6 +259,22 @@ if __name__ == '__main__':
 		print "Test succeeded"
 
 
+	# Test type checking of Regression
+	print "Correct type as input to Regression constructor:"
+	try:
+		Regression(Dataset())
+	except:
+		print "Test failed"
+	else:
+		print "Test succeeded"
+
+	try:
+		Regression("")
+	except TypeError as te:
+		print "Test succeeded"
+	else:
+		print "Test failed"
+
 	# Correct
 	dataset = Dataset().readDataPoints("flueaeg.txt")
 	dataset.plot(plt, Regression(dataset).linearAnalysis())

@@ -52,6 +52,12 @@ class Dataset:
 					raise ValueError("Input file %s at line %d is of wrong format." % (filePath, num_lines))
 		return self
 
+	def __getitem__(self, index):
+		""" Returns the DataPoint at Dataset[index]
+
+		"""
+		return self.dataPoints[index]
+
 	def add(self, dataPoint):
 		""" Adds a single DataPoint to the Dataset.
 
@@ -67,12 +73,6 @@ class Dataset:
 			self.dataPoints.append(dataPoint)
 		return self
 
-	def get(self, index):
-		""" Returns the DataPoint at Dataset[index]
-
-		"""
-		return self.dataPoints[index]
-
 	def getAll(self):
 		""" Returns all DataPoint in the Dataset
 
@@ -83,7 +83,7 @@ class Dataset:
 		""" Returns the largest x value in the Dataset.
 
 		"""
-		tmp = self.get(0)
+		tmp = self[0]
 		for dataPoint in self.getAll():
 			if tmp.getX() < dataPoint.getX():
 				tmp = dataPoint
@@ -93,7 +93,7 @@ class Dataset:
 		""" Returns the smallest x value in the Dataset.
 
 		"""
-		tmp = self.get(0)
+		tmp = self[0]
 		for dataPoint in self.getAll():
 			if tmp.getX() > dataPoint.getX():
 				tmp = dataPoint

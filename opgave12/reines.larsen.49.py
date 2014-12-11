@@ -13,6 +13,8 @@ h = 1
 k = 1
 
 def u(x, t):
+	if x == 0:
+		return 0
 	return math.exp(-((x-8-constant*t)**2)/4)
 
 def a(x, t):
@@ -41,7 +43,7 @@ if __name__ == '__main__':
 		while x < 250:
 			points.append((x, u(x,t)))
 			x += h
-		plt.plot(points, 'co', color="g")
+		plt.plot(points, color="g")
 		plt.draw()
 		t += k
 

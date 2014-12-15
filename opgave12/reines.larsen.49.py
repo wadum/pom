@@ -13,6 +13,8 @@ h = 1.0
 k = 1.0
 
 def u(x, t):
+	''' Her tager vi højde for u(0,t) = u(l,t) = 0.
+		Altså når x er 0, og når x == l'''
 	if x == 0 or x == 250:
 		return 0
 	return math.exp(-((x-8-constant*t)**2)/4)

@@ -13,6 +13,7 @@ constant = 1.0
 h = 1.0
 k = 1.0
 
+# Funktioner
 def u(x, t):
 	if x == 0 or x == 250:
 		return 0
@@ -76,7 +77,6 @@ if __name__ == '__main__':
 		plt.plot(xs, ys, color="g")
 		plt.draw()
 		t += k
-
 
 	# Uncomment the following to get standing waves.
 

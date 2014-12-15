@@ -8,10 +8,12 @@ import matplotlib.pyplot as plt
 import time
 
 
+# Konstanter
 constant = 1.0
 h = 1.0
 k = 1.0
 
+# Funktioner
 def u(x, t):
 	''' Her tager vi højde for u(0,t) = u(l,t) = 0.
 		Altså når x er 0, og når x == l'''
@@ -20,20 +22,47 @@ def u(x, t):
 	return math.exp(-((x-8-constant*t)**2)/4)
 
 def a(x, t):
+	""" Gruppering a i rapporten.
+
+		return:
+			u(x+h, t)
+	"""
 	return u(x+h, t)
 
 def b(x, t):
+	""" Gruppering b i rapporten.
+
+		return:
+			2 * u(x, t)
+	"""
 	return 2 * u(x, t)
 
 def c(x, t):
+	""" Gruppering c i rapporten.
+
+		return:
+			u(x-h, t)
+	"""
 	return u(x-h, t)
 
 def e(x, t):
+	""" Gruppering d i rapporten.
+
+		return:
+			u(x, t-k)
+	"""
 	return u(x, t-k)
 
 def d(x, t):
+	""" Gruppering e i rapporten.
+
+		return:
+			(constant**2 * k**2 * (a(x,t)+c(x,t)) + b(x,t)*(h**2 - constant**2 * k**2) - e(x,t) * h**2)/h**2
+	"""
 	return (constant**2 * k**2 * (a(x,t)+c(x,t)) + b(x,t)*(h**2 - constant**2 * k**2) - e(x,t) * h**2)/h**2
 
+
+# Main funktion
 if __name__ == '__main__':
 	t = 0.0
 	plt.ion()
@@ -50,7 +79,6 @@ if __name__ == '__main__':
 		plt.plot(xs, ys, color="g")
 		plt.draw()
 		t += k
-
 
 	# Uncomment the following to get standing waves.
 

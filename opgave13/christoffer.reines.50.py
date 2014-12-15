@@ -7,7 +7,7 @@ from __future__ import division
 import os.path
 import matplotlib.pyplot as plt
 
-class Dataset:
+class Dataset(object):
 	def __init__(self):
 		""" Constructor til Dataset.
 
@@ -117,7 +117,7 @@ class Dataset:
 		in_plot.plot(regx, regy, color="r")
 		return in_plot
 
-class DataPoint:
+class DataPoint(object):
 	def __init__(self, x, y):
 		""" Constructor to DataPoint """
 		self.x = x
@@ -141,7 +141,7 @@ class DataPoint:
 		"""
 		return self.y
 
-class Regression:
+class Regression(object):
 	def __init__(self, data):
 		""" Constructor to Regression """
 		if isinstance(data, Dataset):

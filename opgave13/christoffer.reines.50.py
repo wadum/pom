@@ -98,24 +98,6 @@ class Dataset(object):
 			if tmp.getX() > dataPoint.getX():
 				tmp = dataPoint
 		return tmp.getX()
-		
-	def plot(self, in_plot, (regx, regy)):
-		""" Plots this Dataset with the output of linearAnalysis.
-
-			args:
-				in_plot: The plot to add points to.
-				(regx, regy):
-					regx: List of x-values from a linearAnalysis.
-					regy: List of y-values from a linearAnalysis.
-		"""
-		listx = []
-		listy = []
-		for dataPoint in self.getAll():
-			listx.append(dataPoint.getX())
-			listy.append(dataPoint.getY())
-		in_plot.plot(listx, listy, 'ro', color="g")
-		in_plot.plot(regx, regy, color="r")
-		return in_plot
 
 class DataPoint(object):
 	def __init__(self, x, y):
@@ -143,7 +125,9 @@ class DataPoint(object):
 
 class Regression(object):
 	def __init__(self, data):
-		""" Constructor to Regression """
+		""" Constructor to Regression 
+				args:
+			data -> DataSet"""
 		if isinstance(data, Dataset):
 			self.data = data
 		else:
@@ -212,6 +196,25 @@ class Regression(object):
 		if len(self.data) < 2:
 			raise RuntimeError("Too few arguments in dataset")
 		return([self.data.x_min(), self.data.x_max()], [self.__f(self.data.x_min()), self.__f(self.data.x_max())])
+		
+	def plot(self, in_plot):
+		""" Plots this Dataset with the output of linearAnalysis.
+		
+			args:
+				in_plot: The plot to add points to.
+				(regx, regy):
+					regx: List of x-values from a linearAnalysis.
+					regy: List of y-values from a linearAnalysis.
+		"""
+		self.linearAnalysis
+		listx = []
+		listy = []
+		for dataPoint in self.data.getAll():
+			listx.append(dataPoint.getX())
+			listy.append(dataPoint.getY())
+		in_plot.plot(listx, listy, 'ro', color="g")
+		in_plot.plot([self.data.x_min(), self.data.x_max()], [self.__f(self.data.x_min()), self.__f(self.data.x_max())], color="r")
+		return in_plot
 
 if __name__ == '__main__':
 	# File not exist
@@ -277,7 +280,7 @@ if __name__ == '__main__':
 
 	# Correct
 	dataset = Dataset().readDataPoints("flueaeg.txt")
-	dataset.plot(plt, Regression(dataset).linearAnalysis())
+	regression = Regression(dataset).plot(plt)	
 	plt.xlabel('x')
 	plt.ylabel('y')
 	plt.title('Linear regressionanalysis of dataset in flueaeg.txt')

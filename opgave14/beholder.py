@@ -37,7 +37,10 @@ class Beholder(object):
 			r = u
 			if u>1:
 				r = 2-u 
-			p = Vektor(r*math.cos(t), r*math.sin(t))
+			px = self.radius*r*math.cos(t)
+			py = self.radius*r*math.sin(t)
+			p = Vektor(px, py)
+			
 			rndV = rndm.uniform(0, self.vMax)
 			rndTheta = rndm.uniform(0, 2*math.pi)
 			v = Vektor(rndV*math.cos(rndTheta),rndV*math.sin(rndTheta))

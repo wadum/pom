@@ -44,6 +44,8 @@ def testAlle():
 		return "testLen mislykkedes"
 	elif not testStr():
 		return "testStr mislykkedes"
+	elif not testEq():
+		return "testEq mislykkedes"
 	else:
 		return "Alle tests er vellykket"
 

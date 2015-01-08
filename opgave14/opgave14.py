@@ -13,6 +13,10 @@ def tegnPartikel(partikel, plot):
 def tegnBeholder(beholder, plot):
 	fig = plot.gcf()
 	fig.gca().add_artist(plot.Circle(beholder.centrumPos, beholder.radius, color='b', fill=False))
+
+	for p in beholder.partikler:
+		tegnPartikel(p, plt)
+
 	(x,y) = beholder.centrumPos
 	plot.ylim([x-beholder.radius-1,x+beholder.radius+1])
 	plot.xlim([x-beholder.radius-1,x+beholder.radius+1])
@@ -20,6 +24,5 @@ def tegnBeholder(beholder, plot):
 
 if __name__ == '__main__':
 	beholder = Beholder(5, (0,0), 1000, 0.5)
-	for p in beholder.partikler:
-		tegnPartikel(p, plt)
 	tegnBeholder(beholder, plt)
+	plt.show()

@@ -23,6 +23,8 @@ class Vektor(object):
 		return "(%g, %g)" % (self["x"], self["y"])
 	def __eq__(self, otherVektor):
 		return self["x"] == otherVektor["x"] and self["y"] == otherVektor["y"]
+	def __add__(self, otherVektor):
+		return Vektor(self["x"] + otherVektor["x"], self["y"] + otherVektor["y"])
 
 def testGetItem():
 	vek = Vektor(1,2)
@@ -37,6 +39,9 @@ def testStr():
 def testEq():
 	return Vektor(1,1) == Vektor(1,1) and Vektor(1,1) != Vektor(2,1)
 
+def testAdd():
+	return Vektor(1,1) + Vektor(1,1) == Vektor(2,2)
+
 def testAlle():
 	if not testGetItem():
 		return "testGetItem mislykkedes"
@@ -46,6 +51,8 @@ def testAlle():
 		return "testStr mislykkedes"
 	elif not testEq():
 		return "testEq mislykkedes"
+	elif not testAdd():
+		return "testAdd mislykkedes"
 	else:
 		return "Alle tests er vellykket"
 

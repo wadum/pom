@@ -18,9 +18,11 @@ class Vektor(object):
 		else:
 			raise IndexError("%d is not a valid key" % key)
 	def __len__(self):
-		return math.sqrt(self.__x ** 2 + self.__y ** 2)
+		return math.sqrt(self["x"] ** 2 + self["y"] ** 2)
 	def __str__(self):
-		return "(%g, %g)" % (self.__x, self.__y)
+		return "(%g, %g)" % (self["x"], self["y"])
+	def __eq__(self, otherVektor):
+		return self["x"] == otherVektor["x"] and self["y"] == otherVektor["y"]
 
 def testGetItem():
 	vek = Vektor(1,2)
@@ -32,14 +34,17 @@ def testLen():
 def testStr():
 	return str(Vektor(1.2,1)) == "(1.2, 1)"
 
+def testEq():
+	return Vektor(1,1) == Vektor(1,1) and Vektor(1,1) != Vektor(2,1)
+
 def testAlle():
 	if not testGetItem():
 		return "testGetItem mislykkedes"
-	if not testLen():
+	elif not testLen():
 		return "testLen mislykkedes"
-	if not testStr():
+	elif not testStr():
 		return "testStr mislykkedes"
-	if testGetItem() and testLen() and testStr():
+	else:
 		return "Alle tests er vellykket"
 
 if __name__ == '__main__':

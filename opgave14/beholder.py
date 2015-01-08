@@ -11,19 +11,22 @@ import random as rndm
 from partikel import *
 
 class Beholder(object):
-	def __init__(self, radius, centrumPos, antalPartikler):
+	def __init__(self, radius, centrumPos, antalPartikler, vMax):
 		""" Constructor til Beholder.
 		args:
 			radius: beholderens radius
-			centrumPos: beholderens centrumPos. Default er (0,0)
+			centrumPos: Tuple, beholderens centrumPos. Default er (0,0)
 			antalPartikler: antal partikler der skal instantieres i beholderen
+			vMax: Den maksimalt tilladte partikelhastighed
 		"""
 		self.radius = radius
 		self.centrumPos = centrumPos
-		self.partikler = self.genererPartikler(antalPartikler)
+		self.vMax = vMax
+		self.partikler = self.genererPartikler(antalPartikler)		
 
 	def genererPartikler(self, antalPartikler):
-		""" Generere en mængde partikler i beholderen.
+		""" Generere en mængde partikler i beholderen med tilfældig position,
+			retning og hastighed.
 		args:
 			antalPartikler: Antal af partikler der skal genereres tilfældigt
 		"""
@@ -35,7 +38,9 @@ class Beholder(object):
 			if u>1:
 				r = 2-u 
 			p = Vektor(r*math.cos(t), r*math.sin(t))
-			v = Vektor(0,0)
+			rndV = rndm.uniform(0, self.vMax)
+			rndTheta = rndm.uniform(0, 2*math.pi)
+			v = Vektor(rndV*math.cos(rndTheta),rndV*math.sin(rndTheta))
 			partikler.append(Partikel(p, v))
 		return partikler
 	
@@ -43,7 +48,7 @@ def testPartiklersPositionIBeholder():
 	""" Tester om de genererede partikler er indeholdt i beholderen
 		eller om de er blevet genereret ude for beholderen.
 		Vi antager her at beholderen er en cirkel """
-	beholder = Beholder(3, (0,0), 300)
+	beholder = Beholder(3, (0,0), 300, 0.5)
 	for p in beholder.partikler:
 		x = p.positionsVektor["x"]
 		y = p.positionsVektor["y"]

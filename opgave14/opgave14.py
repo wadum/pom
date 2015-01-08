@@ -7,7 +7,7 @@ from __future__ import division
 from beholder import *
 import matplotlib.pyplot as plt
 import time
-from vektorlib import *
+from bibliotek import *
 
 # Variable
 deltaT = 1

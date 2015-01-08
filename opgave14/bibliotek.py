@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-	Vektor bibliotek
+	Bibliotek
 """
 from __future__ import division
 import math

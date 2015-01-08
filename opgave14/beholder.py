@@ -6,7 +6,7 @@
 from __future__ import division
 import math	
 from vektor import *
-from vektorlib import *
+from bibliotek import *
 import random as rndm
 from partikel import *
 

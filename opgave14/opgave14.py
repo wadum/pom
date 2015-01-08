@@ -6,6 +6,7 @@
 from __future__ import division
 from beholder import *
 import matplotlib.pyplot as plt
+import time
 from vektorlib import *
 
 # Variable
@@ -15,6 +16,7 @@ def tegnPartikel(partikel, plot):
 	plot.plot(partikel.positionsVektor["x"], partikel.positionsVektor["y"], 'ro', color="g")
 
 def tegnBeholder(beholder, plot):
+	plt.cla()
 	fig = plot.gcf()
 	fig.gca().add_artist(plot.Circle(beholder.centrumPos, beholder.radius, color='b', fill=False))
 
@@ -25,6 +27,7 @@ def tegnBeholder(beholder, plot):
 	plot.ylim([x-beholder.radius-1,x+beholder.radius+1])
 	plot.xlim([x-beholder.radius-1,x+beholder.radius+1])
 	plot.axes().set_aspect(1./plot.axes().get_data_ratio())
+	plt.draw()
 
 def willCollide(partikel, beholder):
 	u""" Afgør om en partikel vil nå udenfor en beholder ved næste tidsiteration 
@@ -36,5 +39,7 @@ def willCollide(partikel, beholder):
 
 if __name__ == '__main__':
 	beholder = Beholder(5, (0,0), 1000, 0.5)
-	tegnBeholder(beholder, plt)
-	plt.show()
+	plt.ion()
+	for i in range(5):
+		tegnBeholder(beholder, plt)
+		time.sleep(5000)

@@ -24,11 +24,7 @@ class Partikel(object):
 	def retning(self):
 		""" Returnerer partiklens retningsvektor """
 		return self.hastighedsVektor;
-		
-	def step(self, deltaT):
-		x = self.positionsVektor["x"]+deltaT*self.hastighedsVektor["x"]
-		y = self.positionsVektor["y"]+deltaT*self.hastighedsVektor["y"]
-		return Vektor(x, y)
+
 		
 def testHastighed():
 	partikel = Partikel(Vektor(0,0), Vektor(3,4))
@@ -36,7 +32,7 @@ def testHastighed():
 
 def testStep():
 	partikel = Partikel(Vektor(0,0), Vektor(1,1))
-	return partikel.step(1) == Vektor(1,1)
+	return step(partikel, 1) == Vektor(1,1)
 	
 def testAlle():
 	if not testHastighed():

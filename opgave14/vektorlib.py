@@ -16,6 +16,11 @@ def vec((p1x, p1y), (p2x, p2y)):
 def dot(v1, v2):
 	return v1["x"] * v2["x"] + v1["y"] * v2["y"]
 
+def step(partikel, deltaT):
+	x = partikel.positionsVektor["x"]+deltaT*partikel.hastighedsVektor["x"]
+	y = partikel.positionsVektor["y"]+deltaT*partikel.hastighedsVektor["y"]
+	return Vektor(x, y)
+	
 def mul(v, s):
 	return Vektor(v["x"] * s, v["y"] * s)
 

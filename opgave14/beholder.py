@@ -32,18 +32,24 @@ class Beholder(object):
 		"""
 		partikler = []
 		for x in range(0, antalPartikler):
+			# rndm.random() genererer et tilfældigt tal mellem 0 og 1
+			# Følgende genererer en tilfældig position 
+			# i for beholderen -1 og 1
 			t = 2*math.pi*rndm.random()
 			u = rndm.random()+rndm.random()
 			r = u
 			if u>1:
 				r = 2-u 
+			# Skaler positionen med beholderens radius
 			px = self.radius*r*math.cos(t)
 			py = self.radius*r*math.sin(t)
 			p = Vektor(px, py)
 			
+			# Udregn en tilfældig retning og hastighed mellem 0 og vMax
 			rndV = rndm.uniform(0, self.vMax)
 			rndTheta = rndm.uniform(0, 2*math.pi)
 			v = Vektor(rndV*math.cos(rndTheta),rndV*math.sin(rndTheta))
+			
 			partikler.append(Partikel(p, v))
 		return partikler
 	

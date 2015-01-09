@@ -27,15 +27,7 @@ def tegnBeholder(beholder, plot):
 	plot.ylim([x-beholder.radius-1,x+beholder.radius+1])
 	plot.xlim([x-beholder.radius-1,x+beholder.radius+1])
 	plot.axes().set_aspect(1./plot.axes().get_data_ratio())
-	plt.draw()
-
-def willCollide(partikel, beholder):
-	u""" Afgør om en partikel vil nå udenfor en beholder ved næste tidsiteration 
-	args:
-		partikel: partiklen det handler om
-		beholder: beholder som indeholder partiklen """
-	return len(vec(beholder.centrumPos, step(partikel, deltaT))) > beholder.radius
-	
+	plt.draw()	
 
 if __name__ == '__main__':
 	beholder = Beholder(5, (0,0), 1000, 0.5)

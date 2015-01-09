@@ -46,8 +46,8 @@ class Beholder(object):
 			p = Vektor(px, py)
 			
 			# Udregn en tilfældig retning og hastighed mellem 0 og vMax
-			rndV = rndm.uniform(0, self.vMax)
-			rndTheta = rndm.uniform(0, 2*math.pi)
+			rndV = rndm.uniform(0.0, self.vMax)
+			rndTheta = rndm.uniform(0.0, 2.0*math.pi)
 			v = Vektor(rndV*math.cos(rndTheta),rndV*math.sin(rndTheta))
 			
 			partikler.append(Partikel(p, v))

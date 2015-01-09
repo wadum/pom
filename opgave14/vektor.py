@@ -8,8 +8,8 @@ import math
 
 class Vektor(object):
 	def __init__(self, x, y):
-		self.__x = x
-		self.__y = y
+		self.__x = float(x)
+		self.__y = float(y)
 	def __getitem__(self, key):
 		if key is "x":
 			return self.__x
@@ -18,9 +18,9 @@ class Vektor(object):
 		else:
 			raise IndexError("%d is not a valid key" % key)
 	def __len__(self):
-		return math.sqrt(self["x"] ** 2 + self["y"] ** 2)
+		return float(math.sqrt(self["x"] ** 2.0 + self["y"] ** 2.0))
 	def __str__(self):
-		return "(%g, %g)" % (self["x"], self["y"])
+		return "Vektor(%g, %g)" % (self["x"], self["y"])
 	def __eq__(self, otherVektor):
 		return self["x"] == otherVektor["x"] and self["y"] == otherVektor["y"]
 	def __add__(self, otherVektor):

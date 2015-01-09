@@ -19,7 +19,7 @@ class Partikel(object):
 		
 	def hastighed(self):
 		""" Returnerer partiklens hastighed	"""
-		return len(self.hastighedsVektor)
+		return self.hastighedsVektor.lenght()
 	
 	def retning(self):
 		""" Returnerer partiklens retningsvektor """
@@ -31,14 +31,13 @@ class Partikel(object):
 		args:
 			partikel: partiklen det handler om
 			beholder: beholder som indeholder partiklen """
-		res = len(vec(beholder.centrumPos, nextStep)) 
+		res = vec(beholder.centrumPos, nextStep).lenght()
 		return res > beholder.radius
 
 	def step(self, beholder, deltaT):
 		u""" Beregner partiklens position i næste iteration """
 		x = self.positionsVektor["x"]+deltaT*self.hastighedsVektor["x"]
 		y = self.positionsVektor["y"]+deltaT*self.hastighedsVektor["y"]
-		print self.willCollide((x,y), beholder)
 		if self.willCollide((x,y), beholder):
 			(pc, u) = self.getCollisionPointWithContainer(beholder)
 			(p, v) = self.getParticleAfterCollision(pc, u, beholder.centrumPos)
@@ -53,10 +52,9 @@ class Partikel(object):
 		yDiff = self.positionsVektor["y"] - beholder.centrumPos[1]
 		a = self.hastighedsVektor["x"]**2.0 + self.hastighedsVektor["y"]**2.0
 		b = 2.0 * (self.hastighedsVektor["x"] * (self.positionsVektor["x"] - beholder.centrumPos[0]) + self.hastighedsVektor["y"] * (self.positionsVektor["y"] - beholder.centrumPos[1]))
-		c = xDiff * xDiff + yDiff * yDiff - beholder.radius**2
-		disc = b * b - 4.0 * a * c;
-		u = abs((-b + math.sqrt(disc)) / (2.0 * a))
-		print u
+		c = xDiff * xDiff + yDiff * yDiff - beholder.radius**2.0
+		disc = abs(b * b - 4.0 * a * c)
+		u = (-b + math.sqrt(disc)) / (2.0 * a)
 		x = self.positionsVektor["x"] + self.hastighedsVektor["x"] * u
 		y = self.positionsVektor["y"] + self.hastighedsVektor["y"] * u
 		return ((x, y), u)
@@ -67,11 +65,9 @@ class Partikel(object):
 		prj = proj((p1["x"], p1["y"]), vec(c, pc))
 		vp = vec((p1["x"], p1["y"]), (prj["x"], prj["y"]))
 		pcv = Vektor(pc[0], pc[1])
-		p1m = p1 + scale(pcv, 2.0*len(vp))
-		print len(v)
-		print v
-		v2 = scale(vec(pc, (p1m["x"], p1m["y"])),len(v))
-		return (pcv + scale(v, 1.0-u), v2)
+		p1m = p1 + scale(vp, 2.0*vp.lenght())
+		v2 = scale(vec(pc, (p1m["x"], p1m["y"])),v.lenght())
+		return (pcv + scale(v, v.lenght()*(1.0-u)), v2)
 
 def testHastighed():
 	partikel = Partikel(Vektor(0,0), Vektor(3,4))

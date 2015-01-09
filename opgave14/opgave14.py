@@ -35,7 +35,7 @@ def drawfigure(i, beholder, plot):
 	return frame
 
 if __name__ == '__main__':
-	beholder = Beholder(5.0, (0.0,0.0), 1, 0.5)
+	beholder = Beholder(5.0, (0.0,0.0), 20, 0.2)
 	fig = plt.figure()
 	ax = plt.subplot(111)
 	ani = animation.FuncAnimation(fig, drawfigure, frames=xrange(100), fargs=(beholder, ax), interval=1)

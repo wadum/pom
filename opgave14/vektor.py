@@ -5,20 +5,23 @@
 """
 from __future__ import division
 import math
+import numpy
 
 class Vektor(object):
 	def __init__(self, x, y):
+		""" Contructor til en Vektor """
 		self.__x = float(x)
 		self.__y = float(y)
 	def __getitem__(self, key):
+		""" x og y kan bruges til at indeksere ind i en Vektor """
 		if key is "x":
 			return self.__x
 		elif key is "y":
 			return self.__y
 		else:
 			raise IndexError("%d is not a valid key" % key)
-	def __len__(self):
-		return float(math.sqrt(self["x"] ** 2.0 + self["y"] ** 2.0))
+	def lenght(self):
+		return numpy.sqrt(self["x"] ** 2.0 + self["y"] ** 2.0)
 	def __str__(self):
 		return "Vektor(%g, %g)" % (self["x"], self["y"])
 	def __eq__(self, otherVektor):
@@ -31,7 +34,7 @@ def testGetItem():
 	return vek["x"] == 1 and vek["y"] == 2
 
 def testLen():
-	return len(Vektor(3,4)) == 5
+	return Vektor(3,4).lenght() == 5
 
 def testStr():
 	return str(Vektor(1.2,1)) == "(1.2, 1)"

@@ -8,7 +8,7 @@ import math
 from vektor import Vektor
 
 def scale(v, s):
-	return Vektor(v["x"]/len(v)*s, v["y"]/len(v)*s)
+	return Vektor(v["x"]/v.lenght()*s, v["y"]/v.lenght()*s)
 
 def vec((p1x, p1y), (p2x, p2y)):
 	return Vektor(p2x - p1x, p2y - p1y)

@@ -8,13 +8,13 @@ from beholder import *
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib import animation
-import time
 from bibliotek import *
 
 # Variable
 deltaT = 1
 
-def drawfigure(i, beholder, plot):
+def tegnBeholder(i, beholder, plot):
+	""" Tegner en beholder og plotter tilhørende partikler """
 	plot.cla()
 	plt.axes().add_artist(plt.Circle(beholder.centrumPos, beholder.radius, color='b', fill=False))
 
@@ -34,9 +34,10 @@ def drawfigure(i, beholder, plot):
 	plt.axes().set_aspect(1./plt.axes().get_data_ratio())
 	return frame
 
+# Main funktion
 if __name__ == '__main__':
-	beholder = Beholder(5.0, (0.0,0.0), 20, 0.2)
-	fig = plt.figure()
-	ax = plt.subplot(111)
-	ani = animation.FuncAnimation(fig, drawfigure, frames=xrange(100), fargs=(beholder, ax), interval=1)
-	plt.show()
+	beholder = Beholder(5.0, (0.0,0.0), 20, 0.2) # Opret en ny beholder
+	fig = plt.figure() # Få fat i figuren
+	ax = plt.subplot(111) # Lav et subplot
+	ani = animation.FuncAnimation(fig, tegnBeholder, frames=xrange(100), fargs=(beholder, ax), interval=1) # Start animationen
+	plt.show() # Vis plottet

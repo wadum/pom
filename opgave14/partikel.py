@@ -24,7 +24,18 @@ class Partikel(object):
 	def retning(self):
 		""" Returnerer partiklens retningsvektor """
 		return self.hastighedsVektor;
-
+		
+	def step(self, beholder, deltaT):
+		u""" Beregner partiklens position i næste iteration """
+		x = self.positionsVektor["x"]+deltaT*self.hastighedsVektor["x"]
+		y = self.positionsVektor["y"]+deltaT*self.hastighedsVektor["y"]
+		if willCollide(self, beholder):
+			(pc, u) = getCollisionPointWithContainer(self, beholder)
+			(p, v) = getParticleAfterCollision(pc, u, beholder.centrumPos, partikel)
+			self.positionsVektor = p
+			self.hastighedsVektor = v
+		else:
+			self.positionsVektor = Vektor(x, y)
 		
 def testHastighed():
 	partikel = Partikel(Vektor(0,0), Vektor(3,4))
